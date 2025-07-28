@@ -1,33 +1,51 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Chat app";
 }
 
-<div>
-    <input id="userInput" placeholder="Your name" />
-    <input id="messageInput" placeholder="Your message" />
+<h2>Realtime Chat</h2>
+
+<div style="margin-bottom: 1em;">
+    <input id="userInput" placeholder="Your name" style="margin-right: 0.5em;" />
+    <input id="messageInput" placeholder="Your message" style="margin-right: 0.5em;" />
     <button onclick="sendMessage()">Send</button>
 </div>
-<ul id="messagesList"></ul>
+
+<ul id="messagesList" style="list-style-type:none; padding-left:0;"></ul>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
 <script>
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl("/chatHub")
+        .withUrl("/chathub")
         .build();
-
+    
     connection.on("ReceiveMessage", (user, message) => {
         const li = document.createElement("li");
-        li.textContent = `${user}: ${message}`;
+        
+        if (user === "System") {
+            li.innerHTML = `<em><strong>${message}</strong></em>`;
+        } else {
+            li.textContent = `${user}: ${message}`;
+        }
+
         document.getElementById("messagesList").appendChild(li);
     });
-
+    
     connection.start().catch(err => console.error(err.toString()));
-
+    
     function sendMessage() {
-        const user = document.getElementById("userInput").value;
-        const message = document.getElementById("messageInput").value;
-        connection.invoke("SendMessage", user, message).catch(err => console.error(err.toString()));
+        const user = document.getElementById("userInput").value.trim();
+        const message = document.getElementById("messageInput").value.trim();
+
+        if (!user || !message) {
+            alert("Please enter both name and message.");
+            return;
+        }
+
+        connection.invoke("SendMessage", user, message)
+            .catch(err => console.error(err.toString()));
+        
+        document.getElementById("messageInput").value = "";
     }
 </script>

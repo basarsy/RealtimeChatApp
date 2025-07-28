@@ -38,3 +38,4 @@
 /home/basar/RiderProjects/RealtimeChatApp/obj/Debug/net8.0/RealtimeChatApp.pdb
 /home/basar/RiderProjects/RealtimeChatApp/obj/Debug/net8.0/RealtimeChatApp.genruntimeconfig.cache
 /home/basar/RiderProjects/RealtimeChatApp/obj/Debug/net8.0/ref/RealtimeChatApp.dll
+/home/basar/RiderProjects/RealtimeChatApp/obj/Debug/net8.0/RealtimeChatApp.sourcelink.json

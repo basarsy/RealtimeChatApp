@@ -1,4 +1,4 @@
-using RealtimeChatApp;
+using RealtimeChatApp.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
